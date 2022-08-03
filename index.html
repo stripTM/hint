@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hint</title>
+  <style type="text/css">
+    h1 {
+      font-size: 23px;
+    }
+    #commonAncestor {
+      position: relative;
+      left: 30vw;
+      padding: 1rem;
+      background-color: rgb(217, 182, 182);
+    }
+    #target {
+      position: absolute;
+      top: 10px;
+      right: 70%;
+      outline: 1px dotted green;
+    }
+    #hint {
+      outline: 1px dotted red;
+      position: absolute;
+      top: calc( var(--y) + 1px );
+      left: calc( var(--x) + 1px );
+    }
+  </style>
+</head>
+<body>
+  <h1>hola</h1>
+  <div id="commonAncestor">
+    <ul>
+      <li>
+        <div id="target"><p>Hola</p>
+          Bla, bla, bla, bla, bla, bla, bl
+        </div>Lorem ipsum dolor sit
+        <span id="hint">*</span>
+      </li>
+      <li>other</li>
+    </ul>
+  </div>
+  <script>
+    const $commonAncestor = document.querySelector("#commonAncestor");
+    const $target = document.querySelector("#target");
+    const $hint = document.querySelector("#hint");
+    const getParents = function (elem) {
+      const parents = [];
+      const isCoordsOrigin = (elem) => {
+        const isRoot = elem instanceof Element;
+        console.log("😀",elem === document, elem,document)
+        const position = window.getComputedStyle(elem).getPropertyValue("position");
+        const isContentBlock = position === "absolute" || position === "relative";
+        return isRoot || isContentBlock;
+      }
+      for ( ; elem && !isCoordsOrigin(elem); elem = elem.parentNode ) {
+        console.log("^", elem, isCoordsOrigin(elem));
+        parents.push(elem);
+      }
+      return elem;
+    };
+    const parents = getParents($target.parentNode);
+    console.log("Origin", parents);
+
+    const {x: x0, y: y0} = $commonAncestor.getBoundingClientRect();
+    const {left: x1, bottom: y1} = $target.getBoundingClientRect();
+    //const {x, y} = {x:0, y:0};
+    $hint.style = `--x: ${x1 - x0}px; --y: ${y1 - y0}px`;
+    const ancestoPosition = window.getComputedStyle($commonAncestor).getPropertyValue("position");
+    console.log(ancestoPosition);
+    console.log ({x0,y0}, {x1,y1}, $hint.style);
+  </script>
+</body>
+</html>
