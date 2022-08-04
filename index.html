@@ -8,6 +8,7 @@
   <style type="text/css">
     h1 {
       font-size: 23px;
+      margin-bottom: var(--height);
     }
     #commonAncestor {
       position: absolute;
@@ -40,7 +41,7 @@
   </style>
 </head>
 <body>
-  <h1>hola</h1>
+  <h1><label>Alto del título <input type="range" min="0" max="100" value="20" id="inputHeaderHeight"/></label></h1>
   <div id="commonAncestor">
     <ul>
       <li>
@@ -56,13 +57,18 @@
 
   </div>
   <script>
+    const inputHeaderHeight = document.querySelector("#inputHeaderHeight");
+    inputHeaderHeight.addEventListener("input", function(e) {
+      document.documentElement.style.setProperty("--height", e.target.value + "vh");
+    });
+    inputHeaderHeight.dispatchEvent(new Event("input"));
     //const $commonAncestor = document.querySelector("#commonAncestor");
     const $target = document.querySelector("#target");
     const $hint = document.querySelector("#hint");
 
     const getContentBox = function (node) {
       const isCoordsOrigin = (elem) => {
-        const isRoot =  elem === document;
+        const isRoot = elem === document;
         const position = !isRoot && window.getComputedStyle(elem).getPropertyValue("position");
         const isContentBlock = position === "absolute" || position === "relative";
         return isRoot || isContentBlock;
