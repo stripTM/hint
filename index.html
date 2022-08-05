@@ -25,9 +25,9 @@
         #target {
           /* position: absolute; */
           position: var(--position);
-          top: 10px;
-          left: 30%;
-          right: 20%;
+          top: var(--top);
+          left: var(--left);
+          right: var(--right);
           outline: 1px dotted green;
           background-color: rgba(125, 192, 59, 0.329);
         }
@@ -42,6 +42,7 @@
 </head>
 <body>
   <h1><label>Head size <input type="range" min="0" max="100" value="20" id="inputHeaderHeight"/></label></h1>
+  <button id="recalculate">Recalculate position</button>
   <div id="commonAncestor">
     <h2>Common ancestor</h2>
     <label><input type="radio" name="commonAncestor" value="static"/> static</label>
@@ -57,9 +58,17 @@
       <li>
         <div id="target">
           <h2>Target</h2>
-          <label><input type="radio" name="target" value="static"/> static</label>
-          <label><input type="radio" name="target" value="relative"/> relative</label>
-          <label><input type="radio" name="target" value="absolute"/> absolute</label>
+          <div>
+            <label><input type="radio" name="target" value="static"/> static</label>
+            <label><input type="radio" name="target" value="relative"/> relative</label>
+            <label><input type="radio" name="target" value="absolute"/> absolute</label>
+          </div>
+          <div>
+            <label>Left: <input type="text" name="left" value="30%"/></label>
+            <label>Top: <input type="text" name="top" value="10px"/></label>
+            <label>Right: <input type="text" name="right" value="20%"/></label>
+           </div>
+          <p>Hint (* yellow) should be positioned below on the left</p>
           <p>Bla, bla, bla, bla, bla, bla, bl</p>
         </div>Lorem ipsum dolor sit
         <p>

@@ -38,17 +38,32 @@ const addWidgetConfigurations = () => {
         translateHintToBottonLeftTarget();
     });
     inputHeaderHeight.dispatchEvent(new Event("input"));
-    //const $commonAncestor = document.querySelector("#commonAncestor");
+
+    // Position: static, relative, absolute
     const $inputsPosition = document.querySelectorAll("input[type=radio]");
     // iterate over each radio button
-    console.log($inputsPosition);
-    $inputsPosition.forEach( ($input) => {
+        $inputsPosition.forEach( ($input) => {
         $input.addEventListener("change", function(e) {
             document.getElementById($input.name).style.setProperty("--position", e.target.value);
             translateHintToBottonLeftTarget();
         });
         $input.checked && $input.dispatchEvent(new Event("change"));
     });
+
+    // translation target
+    const $inputTranslation = document.querySelectorAll("input[name='top'], input[name='left'], input[name='right']");
+    console.log("👉", $inputTranslation);
+    $inputTranslation.forEach( ($input) => {
+        $input.addEventListener("input", function(e) {
+            document.getElementById("target").style.setProperty("--"+$input.name, e.target.value);
+            translateHintToBottonLeftTarget();
+        });
+        $input.dispatchEvent(new Event("input"));
+    });
+
+    // force recalculate hint position
+    const $button = document.querySelector("#recalculate");
+    $button.addEventListener("click", translateHintToBottonLeftTarget);
 }
 
 
