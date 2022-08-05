@@ -56,13 +56,12 @@
 
   </div>
   <script>
-    //const $commonAncestor = document.querySelector("#commonAncestor");
     const $target = document.querySelector("#target");
     const $hint = document.querySelector("#hint");
 
-    const getContentBox = function (node) {
+    const getContentBlock = function (node) {
       const isCoordsOrigin = (elem) => {
-        const isRoot =  elem === document;
+        const isRoot = elem === document;
         const position = !isRoot && window.getComputedStyle(elem).getPropertyValue("position");
         const isContentBlock = position === "absolute" || position === "relative";
         return isRoot || isContentBlock;
@@ -75,12 +74,12 @@
       }
       return elem;
     };
-    const $commonAncestor = getContentBox($hint);
-    console.log("👑 Origin", $commonAncestor);
+    const $contentBlock = getContentBlock($hint);
+    console.log("👑 Origin", $contentBlock);
 
-    const {x: x0, y: y0} = typeof $commonAncestor.getBoundingClientRect === "undefined"
+    const {x: x0, y: y0} = typeof $contentBlock.getBoundingClientRect === "undefined"
       ? {x: 0, y: 0}
-      : $commonAncestor.getBoundingClientRect();
+      : $contentBlock.getBoundingClientRect();
     const {left: x1, bottom: y1} = $target.getBoundingClientRect();
     //const {x, y} = {x:0, y:0};
     $hint.style = `--x: ${x1 - x0}px; --y: ${y1 - y0}px`;
